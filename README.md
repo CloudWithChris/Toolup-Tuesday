@@ -1,11 +1,9 @@
-# Repository Title
-Description of the repository.
+# Toolup Tuesday
+ToolUp Tuesday is all about showing the thought process and decisions made when creating an application. Join Chris and Matt as they build a new application from the ground up, including development processes, tooling, service choices and architectural decisions!
 
 # Usage
 
-A description of the repository. For example;
-
-> This software is a pet side-project and currently in active development. It is therefore not recommended for production use at this time. If you are interested in seeing this progress, please see details below on contributing.
+This repository is entirely focused around an example scenario, and is not considered production ready. This is used for educational purposes as part of the [Toolup Tuesday](https://www.cloudwithchris.com/series/toolup-tuesday/) video series.
 
 ## Contributing
 This project welcomes contributions and suggestions. When you submit code changes, your submissions will be understood under the same [MIT License](LICENSE) that covers the project.
