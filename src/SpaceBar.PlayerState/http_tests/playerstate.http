@@ -1,0 +1,47 @@
+POST https://localhost:7218/api/PlayerState
+Content-Type: application/json
+
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "bars": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "value": 0,
+      "employees": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+      ],
+      "ledger": [
+        {
+          "inventoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "count": 2
+        }
+      ],
+      "popularity": 0,
+      "district": {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "population": 0,
+        "ecomonicRating": 0
+      }
+    }
+  ],
+  "funds": 0,
+  "employees": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "string",
+      "species": {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string"
+      },
+      "salary": 0,
+      "age": 0
+    }
+  ]
+}
+
+###
+
+GET https://localhost:7218/api/PlayerState?id=3fa85f64-5717-4562-b3fc-2c963f66afa6
+Accept: application/json
