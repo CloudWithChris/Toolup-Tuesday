@@ -7,4 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Faker.Net" Version="2.0.154" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SpaceBar.PlayerState">
+      <HintPath>..\SpaceBar.PlayerState\bin\Debug\net6.0\SpaceBar.PlayerState.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
