@@ -1,7 +1,10 @@
 on:
   push: 
     branches:
-      - "main"
+      - main
+    paths:
+      - src/SpaceBar.PlayerState/*
+        
   workflow_dispatch:
 
 jobs:
