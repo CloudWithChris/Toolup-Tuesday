@@ -2,6 +2,7 @@ using SpaceBar.PlayerState.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Adding another comment for testing.
 // Add services to the container.
 
 builder.Services.AddControllers();
