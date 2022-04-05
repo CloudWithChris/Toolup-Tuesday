@@ -5,7 +5,7 @@ import (
 		"time"
 
     "github.com/gin-gonic/gin"
-		"github.com/google/uuid"
+		//"github.com/google/uuid"
 )
 
 // album represents data about a record album.
@@ -22,7 +22,7 @@ type PlayerDecision struct {
 var playerDecisions = []PlayerDecision{
 	{ DecisionID: "1", PlayerID: "1", PlayerName: "John", Decision: "Yes", WorldEventID: "12345", DecisionDate: time.Now().String() },
 	{ DecisionID: "2", PlayerID: "2", PlayerName: "Margaret", Decision: "No", WorldEventID: "12345", DecisionDate: time.Now().String() },
-	{ DecisionID: "3", PlayerID: "3", PlayerName: "Bob", Decision: "Yes", WorldEventID: "12345", DecisionDate: time.Now().String() }
+	{ DecisionID: "3", PlayerID: "3", PlayerName: "Bob", Decision: "Yes", WorldEventID: "12345", DecisionDate: time.Now().String() },
 }
 
 func main() {
@@ -62,7 +62,7 @@ func getDecisionByID(c *gin.Context) {
     // Loop through the list of albums, looking for
     // an album whose ID value matches the parameter.
     for _, d := range playerDecisions {
-        if d.ID == id {
+        if d.PlayerID == id {
             c.IndentedJSON(http.StatusOK, d)
             return
         }
