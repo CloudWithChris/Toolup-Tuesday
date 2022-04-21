@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"appId": "playerdecisions",
+			"appPort": 8080,
+			"label": "daprd-debug",
+			"type": "daprd"
+		},
+		{
+				"label": "daprd-down",
+				"type": "daprd-down",
+				"appId": "playerdecisions"
+		}
+	]
+}

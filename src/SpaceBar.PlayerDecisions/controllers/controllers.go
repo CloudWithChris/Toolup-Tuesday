@@ -1,11 +1,19 @@
 package controllers
 
 import (
+	"context"
+	"encoding/json"
 	"net/http"
 	"time"
 
 	"github.com/cloudwithchris/toolup-tuesday/src/SpaceBar.PlayerDecisions/models"
+	dapr "github.com/dapr/go-sdk/client"
 	"github.com/gin-gonic/gin"
+)
+
+var (
+	ctx   = context.Background()
+	store = "playerdecisions"
 )
 
 var playerDecisions = []models.PlayerDecision{
@@ -16,22 +24,52 @@ var playerDecisions = []models.PlayerDecision{
 
 // getAlbums responds with the list of all albums as JSON.
 func GetDecisions(c *gin.Context) {
+
 	c.IndentedJSON(http.StatusOK, playerDecisions)
 }
 
 // postAlbums adds an album from JSON received in the request body.
 func PostDecisions(c *gin.Context) {
-	var newDecision models.PlayerDecision
-
-	// Call BindJSON to bind the received JSON to
-	// newAlbum.
-	if err := c.BindJSON(&newDecision); err != nil {
+	// (0) Create the Dapr Client.
+	// Return the error if there is one.
+	client, err := dapr.NewClient()
+	if err != nil {
+		c.Error(err)
 		return
 	}
 
-	// Add the new album to the slice.
-	playerDecisions = append(playerDecisions, newDecision)
+	var newDecision models.PlayerDecision
+	if err := c.BindJSON(&newDecision); err != nil {
+		c.Error(err)
+		return
+	}
+
+	jsonData, err := json.Marshal(newDecision)
+	if err != nil {
+		c.Error(err)
+		return
+	}
+
+	// (1) Create the new Player Decision.
+	if err := client.SaveState(ctx, store, newDecision.DecisionID, jsonData, nil); err != nil {
+		c.Error(err)
+		return
+	}
+
 	c.IndentedJSON(http.StatusCreated, newDecision)
+
+	/*
+		var newDecision models.PlayerDecision
+
+		// Call BindJSON to bind the received JSON to
+		// newAlbum.
+		if err := c.BindJSON(&newDecision); err != nil {
+			return
+		}
+
+		// Add the new album to the slice.
+		playerDecisions = append(playerDecisions, newDecision)
+		c.IndentedJSON(http.StatusCreated, newDecision)*/
 }
 
 // getAlbumByID locates the album whose ID value matches the id
