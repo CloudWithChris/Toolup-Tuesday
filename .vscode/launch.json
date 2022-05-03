@@ -5,13 +5,36 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch Player State API",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/SpaceBar.PlayerState/bin/Debug/net6.0/SpaceBar.PlayerState.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
       "name": "Launch Decision API with Dapr",
       "type": "go",
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}/src/SpaceBar.PlayerDecisions",
-      "preLaunchTask": "daprd-debug",
-      "postDebugTask": "daprd-down"
+      "preLaunchTask": "daprd-debug-decisions",
+      "postDebugTask": "daprd-down-decisions"
+    },
+    {
+      "name": "Launch Player State API with Dapr",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "daprd-debug-playerstate",
+      "program": "${workspaceFolder}/src/SpaceBar.PlayerState/bin/Debug/net6.0/SpaceBar.PlayerState.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "postDebugTask": "daprd-down-playerstate"
     }
   ]
 }
