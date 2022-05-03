@@ -10,35 +10,44 @@ namespace SpaceBar.PlayerState.Services
         private readonly List<Models.PlayerState> _playerStates
             = new List<Models.PlayerState>();
 
-        public Models.PlayerState Get(Guid id)
+        public Task<Models.PlayerState> Get(Guid id)
         {
-            return _playerStates.FirstOrDefault(x => x.Id == id);
+            return Task.FromResult(_playerStates.FirstOrDefault(x => x.Id == id));
         }
 
-        public void Save(Models.PlayerState playerState)
+        public Task Save(Models.PlayerState playerState)
         {
-            var existingPlayerState = Get(playerState.Id);
-            if (existingPlayerState != null)
-            {
-                var index = _playerStates.IndexOf(existingPlayerState);
+            return Task.Run(() =>
+                {
+                    var existingPlayerState = Get(playerState.Id).Result;
+                    if (existingPlayerState != null)
+                    {
+                        var index = _playerStates.IndexOf(existingPlayerState);
 
-                _playerStates[index] = playerState;
-            }
-            else
-            {
-                _playerStates.Add(playerState);
-            }
+                        _playerStates[index] = playerState;
+                    }
+                    else
+                    {
+                        _playerStates.Add(playerState);
+                    }
+                }
+            );
+            
 
         }
 
-        public void Delete(Guid id)
+        public Task Delete(Guid id)
         {
-            var existingPlayerState = Get(id);
-            if (existingPlayerState != null)
-            {
-                var index = _playerStates.IndexOf(existingPlayerState);
-                _playerStates.RemoveAt(index);
-            }
+            return Task.Run(() =>
+                {
+                    var existingPlayerState = Get(id).Result;
+                    if (existingPlayerState != null)
+                    {
+                        var index = _playerStates.IndexOf(existingPlayerState);
+                        _playerStates.RemoveAt(index);
+                    }
+                });
+            
         }
     }
 }

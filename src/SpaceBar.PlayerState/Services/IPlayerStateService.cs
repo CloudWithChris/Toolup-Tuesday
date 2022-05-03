@@ -2,8 +2,8 @@
 {
     public interface IPlayerStateService
     {
-        void Delete(Guid id);
-        Models.PlayerState Get(Guid id);
-        void Save(Models.PlayerState playerState);
+        Task Delete(Guid id);
+        Task<Models.PlayerState> Get(Guid id);
+        Task Save(Models.PlayerState playerState);
     }
 }
