@@ -36,6 +36,8 @@ jobs:
   deploy_image:
       if: github.event_name  == 'push' && github.ref == 'refs/heads/main'
       runs-on: ubuntu-latest
+      permissions:
+        packages: write
       steps:
         # checkout the repo
         - name: 'Checkout GitHub Action'
