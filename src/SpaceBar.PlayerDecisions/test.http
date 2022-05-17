@@ -1,0 +1,11 @@
+POST http://localhost:8080/decisions
+content-type: application/json
+
+{
+  "DecisionID": "12313213",
+  "PlayerID": "1",
+  "PlayerName": "Margaret",
+  "Decision": "Yes",
+  "WorldEventID": "12345",
+  "DecisionDate": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001"
+}

@@ -1,0 +1,64 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"appId": "playerdecisions",
+			"appPort": 8080,
+			"label": "daprd-debug-decisions",
+			"type": "daprd"
+		},
+		{
+			"label": "daprd-down-decisions",
+			"type": "daprd-down",
+			"appId": "playerdecisions"
+		},
+		{
+			"label": "build",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "publish",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"publish",
+				"${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "watch",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"watch",
+				"run",
+				"--project",
+				"${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"appId": "PlayerState",
+			"appPort": 5001,
+			"label": "daprd-debug-playerstate",
+			"type": "daprd",
+			"dependsOn": "build"
+		},
+		{
+			"appId": "PlayerState",
+			"label": "daprd-down-playerstate",
+			"type": "daprd-down"
+		}
+	]
+}

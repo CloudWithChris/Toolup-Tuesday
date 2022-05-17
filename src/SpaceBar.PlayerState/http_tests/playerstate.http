@@ -5,21 +5,21 @@ Content-Type: application/json
   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "bars": [
     {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "id": "6a291908-3186-4212-be55-82710d1dd772",
       "name": "string",
       "value": 0,
       "employees": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        "33e093da-45fb-48c3-9f0d-ab125a708235"
       ],
       "ledger": [
         {
-          "inventoryItemId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "inventoryItemId": "b2af31fa-38ae-4ee0-9d2e-b542ceda5fa6",
           "count": 2
         }
       ],
       "popularity": 0,
       "district": {
-        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "id": "6f159dd5-1407-4603-991f-25e95332d284",
         "name": "string",
         "population": 0,
         "ecomonicRating": 0
@@ -29,10 +29,10 @@ Content-Type: application/json
   "funds": 0,
   "employees": [
     {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "id": "33e093da-45fb-48c3-9f0d-ab125a708235",
       "name": "string",
       "species": {
-        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "id": "1ad434a6-f307-498c-9cad-5aca6dd30e7a",
         "name": "string"
       },
       "salary": 0,

@@ -16,16 +16,16 @@ namespace SpaceBar.PlayerState.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery]Guid id)
+        public async Task<IActionResult> Get([FromQuery]Guid id)
         {
-            return new JsonResult(_playerStateService.Get(id));
+            return new JsonResult(await _playerStateService.Get(id));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Models.PlayerState playerState)
+        public async Task<IActionResult> Post([FromBody] Models.PlayerState playerState)
         {
             //TODO: Figure out how to handle bad saves
-            _playerStateService.Save(playerState);
+            await _playerStateService.Save(playerState);
             return Ok("Player Updated");
         }
     }

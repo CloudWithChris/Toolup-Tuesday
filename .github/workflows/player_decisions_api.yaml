@@ -1,0 +1,75 @@
+name: 'Player Decision API'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/SpaceBar.PlayerDecisions/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/SpaceBar.PlayerDecisions/**'    
+
+env:
+  AZURE_ACR_NAME: cwceventplatform
+  AZURE_ACR_ENDPOINT: cwceventplatform.azurecr.io
+  IMAGE_NAME: eventplatform/redirect
+
+jobs:
+
+  build_image:
+    runs-on: ubuntu-latest
+    env:
+      MICROSERVICE_LOCATION: src/SpaceBar.PlayerDecisions/
+    steps:
+      # checkout the repo
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+        
+      - name: 'Build and Push Redirect Container Image'
+        working-directory: ${{ env.MICROSERVICE_LOCATION }}
+        run: |
+          docker build . -t ${{ env.IMAGE_NAME }}:${{ github.sha }}
+# deploy_image:
+#     if: github.event_name  == 'push' && github.ref == 'refs/heads/main'
+#     permissions:
+#       id-token: write
+#       contents: read
+#     environment: production.build
+#     runs-on: ubuntu-latest
+#     env:
+#       MICROSERVICE_LOCATION: api/redirect/
+#     steps:
+#       # checkout the repo
+#       - name: 'Checkout GitHub Action'
+#         uses: actions/checkout@v3
+
+#       - name: 'Download swagger CLI'
+#         run: |
+#           sudo apt update
+#           sudo apt install -y apt-transport-https gnupg curl
+#           curl -1sLf 'https://dl.cloudsmith.io/public/go-swagger/go-swagger/gpg.2F8CB673971B5C9E.key' | sudo apt-key add -
+#           curl -1sLf 'https://dl.cloudsmith.io/public/go-swagger/go-swagger/config.deb.txt?distro=debian&codename=any-version' | sudo tee /etc/apt/sources.list.d/go-swagger-go-swagger.list
+#           sudo apt update 
+#           sudo apt install swagger
+
+#       - name: 'Generate Swagger JSON'
+#         working-directory: ${{ env.MICROSERVICE_LOCATION }}
+#         run: |
+#           swagger generate spec -o cmd/httpserver/swagger/swagger.json
+        
+#       - name: 'Az CLI Login via OIDC'
+#         uses: azure/login@v1
+#         with:
+#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        
+#       - name: 'Build and Push Redirect Container Image'
+#         working-directory: ${{ env.MICROSERVICE_LOCATION }}
+#         run: |
+#           az acr login --name ${{ env.AZURE_ACR_NAME }}
+#           docker build . -t ${{ env.AZURE_ACR_ENDPOINT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+#           docker push ${{ env.AZURE_ACR_ENDPOINT }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
