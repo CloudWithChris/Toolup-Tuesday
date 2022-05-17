@@ -4,8 +4,14 @@ on:
       - main
     paths:
       - src/SpaceBar.PlayerState/*
+      - .github/workflows/player_state_api.yaml
         
   workflow_dispatch:
+
+env:
+  IMAGE_NAME: cloudwithchris/toolup-tuesday/spacebar/player-state
+  MICROSERVICE_LOCATION: src/SpaceBar.PlayerState/
+  REGISTRY: ghcr.io
 
 jobs:
   build_player_state_api:
@@ -19,4 +25,31 @@ jobs:
           dotnet-version: 6.0.x
       - name: "Build dotnet"
         run: dotnet build
-        working-directory: src/SpaceBar.PlayerState/
+        working-directory: ${{env.MICROSERVICE_LOCATION}}
+  deploy_image:
+    if: github.event_name  == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      # checkout the repo
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.0.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.0.1
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3.0.0
+        with:
+          context: ${{ env.MICROSERVICE_LOCATION }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
