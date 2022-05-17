@@ -50,13 +50,13 @@ jobs:
           id: meta
           uses: docker/metadata-action@v4.0.1
           with:
-            images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         - name: Build and push Docker image
           uses: docker/build-push-action@v3.0.0
           with:
             context: .
             push: true
-            # tags: ${{ steps.meta.outputs.tags }}
+            tags: ${{ github.sha }}
             labels: ${{ steps.meta.outputs.labels }}
 
         # - name: 'Build and Push Redirect Container Image'
