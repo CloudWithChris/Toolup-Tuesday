@@ -15,7 +15,7 @@ on:
       - '.github/workflows/player_decisions_api.yaml'  
 
 env:
-  IMAGE_NAME: ${{ github.repository }}/spacebar/player-decisions
+  IMAGE_NAME: cloudwithchris/toolup-tuesday/spacebar/player-decisions
   MICROSERVICE_LOCATION: src/SpaceBar.PlayerDecisions/
   REGISTRY: ghcr.io
 
