@@ -13,9 +13,7 @@ on:
       - 'src/SpaceBar.PlayerDecisions/**'    
 
 env:
-  AZURE_ACR_NAME: cwceventplatform
-  AZURE_ACR_ENDPOINT: cwceventplatform.azurecr.io
-  IMAGE_NAME: eventplatform/redirect
+  IMAGE_NAME: spacebar/player-decisions
 
 jobs:
 
