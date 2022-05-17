@@ -1,3 +1,4 @@
+name: 'Player State API'
 on:
   push: 
     branches:
@@ -29,6 +30,7 @@ jobs:
   deploy_image:
     if: github.event_name  == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    needs: build_player_state_api
     permissions:
       packages: write
     steps:
