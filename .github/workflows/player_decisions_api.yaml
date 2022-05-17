@@ -17,7 +17,7 @@ on:
 env:
   IMAGE_NAME: spacebar/player-decisions
   MICROSERVICE_LOCATION: src/SpaceBar.PlayerDecisions/
-  REGISTRY: ghrc.io
+  REGISTRY: ghcr.io
 
 jobs:
 
@@ -34,6 +34,7 @@ jobs:
           docker build . -t ${{ env.IMAGE_NAME }}:${{ github.sha }}
   deploy_image:
       if: github.event_name  == 'push' && github.ref == 'refs/heads/main'
+      needs: build_image
       runs-on: ubuntu-latest
       steps:
         # checkout the repo
