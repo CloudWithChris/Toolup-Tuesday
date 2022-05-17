@@ -46,9 +46,21 @@ jobs:
             registry: ${{ env.REGISTRY }}
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
+        - name: Extract metadata (tags, labels) for Docker
+          id: meta
+          uses: docker/metadata-action@v4.0.1
+          with:
+            images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v3.0.0
+          with:
+            context: .
+            push: true
+            tags: ${{ steps.meta.outputs.tags }}
+            labels: ${{ steps.meta.outputs.labels }}
 
-        - name: 'Build and Push Redirect Container Image'
-          working-directory: ${{ env.MICROSERVICE_LOCATION }}
-          run: |
-            docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        # - name: 'Build and Push Redirect Container Image'
+        #   working-directory: ${{ env.MICROSERVICE_LOCATION }}
+        #   run: |
+        #     docker build . -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        #     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
