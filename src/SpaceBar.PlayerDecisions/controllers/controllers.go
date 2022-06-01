@@ -87,3 +87,8 @@ func GetDecisionByID(c *gin.Context) {
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Decision not found"})
 }
+
+func SimpleRequest(c *gin.Context) {
+	c.String(http.StatusOK, "Hello World")
+	return
+}

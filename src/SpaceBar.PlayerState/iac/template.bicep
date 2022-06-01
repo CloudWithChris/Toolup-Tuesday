@@ -2,17 +2,16 @@ param prefix string = 'tut'
 
 param location string = resourceGroup().location
 
-param containerAppImage string = 'ghcr.io/cloudwithchris/toolup-tuesday/spacebar/player-decisions:183b45616542ae7a893a03394904cc7eed91cffb'
+param containerAppImage string = 'ghcr.io/cloudwithchris/toolup-tuesday/spacebar/player-state:0128fa1d5315c9e50d0ba672f8f26cde4e20af94'
 
 @secure()
 param containerRegistryPassword string
 
 var containerAppEnvironmentName = '${prefix}-environment'
-var containerAppName = '${prefix}-playerdecisions'
+var containerAppName = '${prefix}-playerstate'
 var containerRegistryLoginServer = 'ghcr.io'
 var containerRegistryUserName = 'chrisreddington'
 
-var logAnalyticsWorkspaceName= '${prefix}-logs'
 var storageAccountName = '${prefix}storage'
 var storageAccountKeyRef = 'storage-account-key'
 var containerRegistryPasswordRef = 'container-registry-password'
@@ -26,8 +25,8 @@ resource environment 'Microsoft.App/managedEnvironments@2022-01-01-preview' exis
   name: containerAppEnvironmentName
 }
 
-resource playerdecisionstoragestate 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
-  name: 'playerdecisions'
+resource playerstatestoragestate 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
+  name: 'playerstate'
   parent: environment
   properties: {
     componentType: 'state.azure.tablestorage'
@@ -43,11 +42,11 @@ resource playerdecisionstoragestate 'Microsoft.App/managedEnvironments/daprCompo
       }
       {
         name: 'tableName'
-        value: 'playerdecisions'
+        value: 'playerstate'
       } 
     ]
     scopes: [
-      'playerdecisions'
+      'playerstate'
     ]
     secrets: [
       {
@@ -68,7 +67,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       activeRevisionsMode: 'single'
       ingress: {
         external: true
-        targetPort: 8080
+        targetPort: 5016
       }
       registries: [
         {
@@ -79,8 +78,8 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       ]
       dapr: {
         enabled: true
-        appId: 'playerdecisions'
-        appPort: 8080
+        appId: 'playerstate'
+        appPort: 5016
       }
       secrets : [
         {
@@ -93,7 +92,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       containers: [
         {
           image: containerAppImage
-          name: 'playerdecisions'
+          name: 'playerstate'
         }
       ]
       scale: {
