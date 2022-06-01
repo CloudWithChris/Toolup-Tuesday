@@ -16,6 +16,8 @@ FROM golang:1.18-alpine AS build
 # paths will be resolved from here.
 WORKDIR /src
 
+
+
 # Copy the go.mod and go.sum files to the /src directory, so 
 # that they can be used by the build to download the latest
 # dependencies.
@@ -27,7 +29,7 @@ RUN go mod download
 COPY . .
 
 # Build the image.
-RUN go build -o /app main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app main.go
 
 ########################################
 #

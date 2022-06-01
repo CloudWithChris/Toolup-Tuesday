@@ -8,9 +8,10 @@ import (
 
 func main() {
 	router := gin.Default()
+	router.GET("/", controllers.SimpleRequest)
 	router.GET("/decisions", controllers.GetDecisions)
 	router.GET("/decisions/:id", controllers.GetDecisionByID)
 	router.POST("/decisions", controllers.PostDecisions)
 
-	router.Run("localhost:8080")
+	router.Run()
 }
