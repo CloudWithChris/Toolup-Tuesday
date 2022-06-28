@@ -1,4 +1,4 @@
-POST https://localhost:7218/api/PlayerState
+POST https://tut-playerstate--h37f9gj.redpebble-0d6090f5.westeurope.azurecontainerapps.io/api/PlayerState
 Content-Type: application/json
 
 {
@@ -43,5 +43,5 @@ Content-Type: application/json
 
 ###
 
-GET https://localhost:7218/api/PlayerState?id=3fa85f64-5717-4562-b3fc-2c963f66afa6
+GET https://tut-playerstate--h37f9gj.redpebble-0d6090f5.westeurope.azurecontainerapps.io/api/PlayerState?id=3fa85f64-5717-4562-b3fc-2c963f66afa6
 Accept: application/json

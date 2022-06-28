@@ -2,7 +2,7 @@ param prefix string = 'tut'
 
 param location string = resourceGroup().location
 
-param containerAppImage string = 'ghcr.io/cloudwithchris/toolup-tuesday/spacebar/player-decisions:183b45616542ae7a893a03394904cc7eed91cffb'
+param containerAppImage string = 'ghcr.io/cloudwithchris/toolup-tuesday/spacebar/player-decisions:c133a5b9ab291949cbfb3c70655c5dd523a36f5d'
 
 @secure()
 param containerRegistryPassword string
