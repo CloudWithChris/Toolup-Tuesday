@@ -7,7 +7,8 @@ on:
     paths:
       - 'src/iac/**'
       - '.github/workflows/deploy_base_infrastructure.yaml'
-
+  workflow_dispatch:
+    
 jobs:
   deploy_infrastructure:
     runs-on: ubuntu-latest
