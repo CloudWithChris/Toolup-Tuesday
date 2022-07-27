@@ -7,7 +7,12 @@ on:
     paths:
       - 'src/iac/**'
       - '.github/workflows/deploy_base_infrastructure.yaml'
+  workflow_dispatch:
 
+env:
+  RESOURCE_GROUP: toolup-tuesday
+  RESOURCE_GROUP_LOCATION: northeurope
+    
 jobs:
   deploy_infrastructure:
     runs-on: ubuntu-latest
@@ -24,4 +29,12 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - uses: 'azure/CLI@v1'
+        with:
+          azcliversion: 2.38.0
+          inlineScript: |
+            az group create -n ${{env.RESOURCE_GROUP}} --location ${{env.RESOURCE_GROUP_LOCATION}}
+            az deployment group create --template-file './src/iac/core.bicep' -g ${{env.RESOURCE_GROUP}}
+
+
 

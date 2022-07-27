@@ -1,4 +1,4 @@
-POST https://tut-playerdecisions--gux06gw.redpebble-0d6090f5.westeurope.azurecontainerapps.io/decisions
+POST tut-playerdecisions.thankfulpond-fb1cbc0f.northeurope.azurecontainerapps.io/decisions
 content-type: application/json
 
 {
