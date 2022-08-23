@@ -8,5 +8,5 @@ public class PlayerState
 
     public int Funds { get; set; }
 
-    public Employee[]? Employees { get; set; }
+    //public Employee[]? Employees { get; set; }
 }
