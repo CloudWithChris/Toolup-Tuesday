@@ -45,3 +45,24 @@ Content-Type: application/json
 
 GET https://tut-playerstate--h37f9gj.redpebble-0d6090f5.westeurope.azurecontainerapps.io/api/PlayerState?id=3fa85f64-5717-4562-b3fc-2c963f66afa6
 Accept: application/json
+
+###
+
+POST https://tut-playerstate.thankfulpond-fb1cbc0f.northeurope.azurecontainerapps.io/api/PlayerCreation?firstBarName=Mos%20Eisley
+Content-Type: application/json
+
+{
+}
+
+###
+
+PUT https://tut-playerstate.thankfulpond-fb1cbc0f.northeurope.azurecontainerapps.io/api/BarManagement/82ff4899-fcc3-4a65-8b4d-3fe0534e9137/c8c27432-35ca-4f85-af27-7d27cf4b410a?newBarType=Cantina
+Content-Type: application/json
+
+{}
+
+###
+
+GET https://tut-playerstate.thankfulpond-fb1cbc0f.northeurope.azurecontainerapps.io/api/PlayerState?id=82ff4899-fcc3-4a65-8b4d-3fe0534e9137
+Accept: application/json
+

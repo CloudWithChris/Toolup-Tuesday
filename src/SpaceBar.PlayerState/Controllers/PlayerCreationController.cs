@@ -17,7 +17,7 @@ namespace SpaceBar.PlayerState.Controllers
 
         /* Create player API */
         [HttpPost]
-        public async Task<IActionResult> Post(string firstBarName)
+        public async Task<IActionResult> Post([FromBody]string firstBarName)
         {
             var playerState = new Models.PlayerState
             {
