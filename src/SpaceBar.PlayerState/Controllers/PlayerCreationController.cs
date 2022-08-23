@@ -36,7 +36,7 @@ namespace SpaceBar.PlayerState.Controllers
 
           //TODO: Figure out how to handle bad saves
           await _playerStateService.Save(playerState);
-          return Ok("Player  Created");
+          return Ok(playerState);
         }
     }
 }
