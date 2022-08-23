@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - src/SpaceBar.PlayerState/*
+      - src/SpaceBar.PlayerState/**
       - .github/workflows/player_state_api.yaml
         
   workflow_dispatch:
