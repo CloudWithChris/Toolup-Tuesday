@@ -34,11 +34,11 @@ resource worldEventsInputBinding 'Microsoft.App/managedEnvironments/daprComponen
     version: 'v1'
     metadata: [
       {
-        name: 'accountName'
+        name: 'storageAccount'
         value: storageAccountName
       }
       {
-        name: 'accountKey'
+        name: 'storageAccessKey'
         secretRef: storageAccountKeyRef
       }
       {
