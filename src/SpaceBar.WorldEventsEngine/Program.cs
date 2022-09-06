@@ -18,7 +18,7 @@ app.MapPost("/world-events", async (Guid tickId) =>
 
     var daprClient = new DaprClientBuilder().Build();
 
-    await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Get, "playerstate", "/api/PlayerState")
+    await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Get, "playerstate", "/api/PlayerState?id=82ff4899-fcc3-4a65-8b4d-3fe0534e9137")
         .ContinueWith((playerStateTask) =>
     {
         var playerState = playerStateTask.Result;
