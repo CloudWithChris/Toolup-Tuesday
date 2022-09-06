@@ -1,4 +1,4 @@
-name: 'Player State API'
+name: 'World Events Engine'
 on:
   push: 
     branches:
