@@ -1,38 +1,54 @@
-﻿namespace SpaceBar.WorldEventsEngine;
+﻿using Dapr.Client;
+using SpaceBar.WorldEventsEngine.Models;
 
-using SpaceBar.PlayerState.Models;
-using Repositories;
+var builder = WebApplication.CreateBuilder(args);
 
+var app = builder.Build();
 
-public static class Program
+app.MapPost("/world-events", async (Guid tickId) =>
 {
-    public static void Main()
+    var rnd = new Random();
+
+    //Generate a random number between -0.5 and 0.5 for each BarType
+    var barTypeValues = new Dictionary<BarType, double>();
+    foreach (BarType barType in Enum.GetValues(typeof(BarType)))
     {
-        //Load Player States
-        var playerStateRepo = new PlayerStateRepository();
-
-        //Load World Events
-        var worldRepo = new WorldEventRepository();
-        var worldEvents = worldRepo.GenerateWorldEvents().ToArray();
-
-        foreach (var playerState in playerStateRepo.GetPlayerStates())
-        {
-
-            Console.WriteLine($"Input value {playerState.Bars[0].Value}");
-
-            PlayerState newPlayerState = playerState;
-
-            foreach (var item in worldEvents)
-            {
-                newPlayerState = item.AlterState(newPlayerState);
-            }
-
-            //TODO: Persist Player States.
-
-            Console.WriteLine($"Outgoing value {newPlayerState.Bars[0].Value}");
-        }
+        barTypeValues.Add(barType, rnd.NextDouble() - 0.5);
     }
-}
+
+    var daprClient = new DaprClientBuilder().Build();
+
+    await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Get, "playerstate", "/api/PlayerState")
+        .ContinueWith((playerStateTask) =>
+    {
+        var playerState = playerStateTask.Result;
+        foreach (var bar in playerState.Bars)
+        {
+            var barTypeValue = barTypeValues[bar.BarType];
+            bar.Value =  (int)(bar.Value * barTypeValue);
+        }
+        daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Post, "playerstate", "/api/PlayerState", playerState);
+    });
+
+    await daprClient.SaveStateAsync<WorldEvent>("worldevents", tickId.ToString(), new WorldEvent
+    {
+        TickId = tickId,
+        BarTypeValues = barTypeValues
+    });
+
+
+
+    return Results.Ok();
+});
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
 
 
 
