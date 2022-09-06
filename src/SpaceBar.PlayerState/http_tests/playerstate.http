@@ -52,6 +52,7 @@ POST https://tut-playerstate.thankfulpond-fb1cbc0f.northeurope.azurecontainerapp
 Content-Type: application/json
 
 {
+  "firstBarName": "Mos Eisley"
 }
 
 ###
