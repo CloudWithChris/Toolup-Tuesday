@@ -78,4 +78,4 @@ jobs:
           with:
             azcliversion: 2.38.0
             inlineScript: |
-              az deployment group create --name 'player-state-${{github.sha}}' --template-file './src/SpaceBar.WorldEventsEngine/iac/template.bicep' --parameters containerAppImage=${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.sha }} containerRegistryPassword=${{ secrets.GITHUB_TOKEN }} -g ${{env.RESOURCE_GROUP}}
+              az deployment group create --name 'world-events-engine-${{github.sha}}' --template-file './src/SpaceBar.WorldEventsEngine/iac/template.bicep' --parameters containerAppImage=${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{ github.sha }} containerRegistryPassword=${{ secrets.GITHUB_TOKEN }} -g ${{env.RESOURCE_GROUP}}
