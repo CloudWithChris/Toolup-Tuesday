@@ -2,6 +2,9 @@ using Dapr.Client;
 
 namespace SpaceBar.PlayerState.Services
 {
+    /// <summary>
+    /// Save state to Dapr Component
+    /// </summary>
     public class DaprStatePlayerStateService : IPlayerStateService
     {
         public DaprStatePlayerStateService()
