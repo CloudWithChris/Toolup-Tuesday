@@ -4,10 +4,11 @@ using SpaceBar.WorldEventsEngine.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
+app.Logger.LogInformation("Starting WorldEventsEngine");
 
 app.MapPost("/world-events", async (Guid tickId) =>
 {
-    Console.WriteLine($"World Event: {tickId}");
+    app.Logger.LogInformation($"World Event: {tickId}");
     var rnd = new Random();
 
     //Generate a random number between -0.5 and 0.5 for each BarType
@@ -22,7 +23,7 @@ app.MapPost("/world-events", async (Guid tickId) =>
     await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Get, "playerstate", "/api/PlayerState?id=82ff4899-fcc3-4a65-8b4d-3fe0534e9137")
         .ContinueWith(async (playerStateTask) =>
     {
-        Console.WriteLine($"Got Player State: {playerStateTask.Result.Id}");
+        app.Logger.LogInformation($"Got Player State: {playerStateTask.Result.Id}");
         var playerState = playerStateTask.Result;
         foreach (var bar in playerState.Bars)
         {
@@ -30,7 +31,7 @@ app.MapPost("/world-events", async (Guid tickId) =>
             bar.Value =  (int)(bar.Value * barTypeValue);
         }
         await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Post, "playerstate", "/api/PlayerState", playerState);
-        Console.WriteLine($"Wrote Player State: {playerStateTask.Result.Id}");
+        app.Logger.LogInformation($"Wrote Player State: {playerStateTask.Result.Id}");
     });
 
     await daprClient.SaveStateAsync<WorldEvent>("worldevents", tickId.ToString(), new WorldEvent
@@ -39,7 +40,7 @@ app.MapPost("/world-events", async (Guid tickId) =>
         BarTypeValues = barTypeValues
     });
 
-    Console.WriteLine($"Wrote World Event: {tickId}");
+    app.Logger.LogInformation($"Wrote World Event: {tickId}");
 
 
 
