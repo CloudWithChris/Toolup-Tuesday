@@ -7,6 +7,7 @@ var app = builder.Build();
 
 app.MapPost("/world-events", async (Guid tickId) =>
 {
+    Console.WriteLine($"World Event: {tickId}");
     var rnd = new Random();
 
     //Generate a random number between -0.5 and 0.5 for each BarType
@@ -19,15 +20,17 @@ app.MapPost("/world-events", async (Guid tickId) =>
     var daprClient = new DaprClientBuilder().Build();
 
     await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Get, "playerstate", "/api/PlayerState?id=82ff4899-fcc3-4a65-8b4d-3fe0534e9137")
-        .ContinueWith((playerStateTask) =>
+        .ContinueWith(async (playerStateTask) =>
     {
+        Console.WriteLine($"Got Player State: {playerStateTask.Result.Id}");
         var playerState = playerStateTask.Result;
         foreach (var bar in playerState.Bars)
         {
             var barTypeValue = barTypeValues[bar.BarType];
             bar.Value =  (int)(bar.Value * barTypeValue);
         }
-        daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Post, "playerstate", "/api/PlayerState", playerState);
+        await daprClient.InvokeMethodAsync<PlayerState>(HttpMethod.Post, "playerstate", "/api/PlayerState", playerState);
+        Console.WriteLine($"Wrote Player State: {playerStateTask.Result.Id}");
     });
 
     await daprClient.SaveStateAsync<WorldEvent>("worldevents", tickId.ToString(), new WorldEvent
@@ -35,6 +38,8 @@ app.MapPost("/world-events", async (Guid tickId) =>
         TickId = tickId,
         BarTypeValues = barTypeValues
     });
+
+    Console.WriteLine($"Wrote World Event: {tickId}");
 
 
 
