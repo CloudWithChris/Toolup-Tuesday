@@ -1,4 +1,4 @@
-param prefix string = 'tu'
+param prefix string = 'tutspace'
 
 param location string = resourceGroup().location
 
