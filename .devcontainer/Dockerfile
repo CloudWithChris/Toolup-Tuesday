@@ -19,6 +19,8 @@ ARG USE_MOBY="true"
 
 ARG USERNAME=vscode
 
+ARG GO_VERSION="go1.19.2.linux-amd64"
+
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your
 # own dependencies. A user of "automatic" attempts to reuse an user ID if one already exists.
 COPY library-scripts/docker-debian.sh /tmp/library-scripts/
@@ -28,10 +30,12 @@ RUN apt-get update \
     # Install Dapr
     && wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash \
     # Clean up
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/ \
+    # Install go
+    wget https://go.dev/dl/${GO_VERSION}.tar.gz && rm -rf /usr/local/go && tar -C /usr/local -xzf ${GO_VERSION}.tar.gz
 
 # Add daprd to the path for the VS Code Dapr extension.
-ENV PATH "$PATH:/home/${USERNAME}/.dapr/bin"
+ENV PATH "$PATH:/home/${USERNAME}/.dapr/bin:/usr/local/go/bin"
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.
