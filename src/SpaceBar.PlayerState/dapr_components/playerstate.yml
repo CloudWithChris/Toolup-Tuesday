@@ -1,0 +1,20 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: playerstate
+spec:
+  type: state.azure.tablestorage
+  version: v1
+  metadata:
+  - name: accountName
+    value: tutspacestorage
+  - name: accountKey
+    secretKeyRef:
+      name: PLAYERSTATE_STORAGEACCOUNT_KEY
+      key: PLAYERSTATE_STORAGEACCOUNT_KEY
+  - name: tableName
+    value: playerstate
+  - name: cosmosDbMode
+    value: false
+auth:
+  secretStore: envvar-secret-store
