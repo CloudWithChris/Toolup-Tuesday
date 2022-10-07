@@ -67,3 +67,52 @@ Content-Type: application/json
 GET https://tut-playerstate.thankfulpond-fb1cbc0f.northeurope.azurecontainerapps.io/api/PlayerState?id=82ff4899-fcc3-4a65-8b4d-3fe0534e9137
 Accept: application/json
 
+### 
+GET http://127.0.0.1:5000/api/PlayerState?id=82ff4899-fcc3-4a65-8b4d-3fe0534e9137
+
+### 
+POST http://127.0.0.1:5000/api/PlayerState
+Content-Type: application/json
+
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "bars": [
+    {
+      "id": "6a291908-3186-4212-be55-82710d1dd772",
+      "name": "string",
+      "value": 0,
+      "employees": [
+        "33e093da-45fb-48c3-9f0d-ab125a708235"
+      ],
+      "ledger": [
+        {
+          "inventoryItemId": "b2af31fa-38ae-4ee0-9d2e-b542ceda5fa6",
+          "count": 2
+        }
+      ],
+      "popularity": 0,
+      "district": {
+        "id": "6f159dd5-1407-4603-991f-25e95332d284",
+        "name": "string",
+        "population": 0,
+        "ecomonicRating": 0
+      }
+    }
+  ],
+  "funds": 0,
+  "employees": [
+    {
+      "id": "33e093da-45fb-48c3-9f0d-ab125a708235",
+      "name": "string",
+      "species": {
+        "id": "1ad434a6-f307-498c-9cad-5aca6dd30e7a",
+        "name": "string"
+      },
+      "salary": 0,
+      "age": 0
+    }
+  ]
+}
+
+
+
