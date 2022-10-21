@@ -1,120 +1,38 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"appId": "playerdecisions",
-			"appPort": 8080,
-			"label": "daprd-debug-decisions",
-			"type": "daprd"
-		},
-		{
-			"label": "daprd-down-decisions",
-			"type": "daprd-down",
-			"appId": "playerdecisions"
-		},
-		{
-			"label": "build",
-			"command": "dotnet",
-			"type": "process",
-			"args": [
-				"build",
-				"${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj",
-				"/property:GenerateFullPaths=true",
-				"/consoleloggerparameters:NoSummary"
-			],
-			"problemMatcher": "$msCompile"
-		},
-		{
-			"label": "publish",
-			"command": "dotnet",
-			"type": "process",
-			"args": [
-				"publish",
-				"${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj",
-				"/property:GenerateFullPaths=true",
-				"/consoleloggerparameters:NoSummary"
-			],
-			"problemMatcher": "$msCompile"
-		},
-		{
-			"label": "watch",
-			"command": "dotnet",
-			"type": "process",
-			"args": [
-				"watch",
-				"run",
-				"--project",
-				"${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj"
-			],
-			"problemMatcher": "$msCompile"
-		},
-		{
-			"appId": "PlayerState",
-			"appPort": 5001,
-			"label": "daprd-debug-playerstate",
-			"type": "daprd",
-			"dependsOn": "build"
-		},
-		{
-			"appId": "PlayerState",
-			"label": "daprd-down-playerstate",
-			"type": "daprd-down"
-		},
-		{
-			"type": "docker-build",
-			"label": "docker-build: debug",
-			"dependsOn": [
-				"build"
-			],
-			"dockerBuild": {
-				"tag": "tooluptuesday:dev",
-				"target": "base",
-				"dockerfile": "${workspaceFolder}/src/SpaceBar.PlayerState/Dockerfile",
-				"context": "${workspaceFolder}",
-				"pull": true
-			},
-			"netCore": {
-				"appProject": "${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj"
-			}
-		},
-		{
-			"type": "docker-build",
-			"label": "docker-build: release",
-			"dependsOn": [
-				"build"
-			],
-			"dockerBuild": {
-				"tag": "tooluptuesday:latest",
-				"dockerfile": "${workspaceFolder}/src/SpaceBar.PlayerState/Dockerfile",
-				"context": "${workspaceFolder}",
-				"pull": true
-			},
-			"netCore": {
-				"appProject": "${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj"
-			}
-		},
-		{
-			"type": "docker-run",
-			"label": "docker-run: debug",
-			"dependsOn": [
-				"docker-build: debug"
-			],
-			"dockerRun": {},
-			"netCore": {
-				"appProject": "${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj",
-				"enableDebugging": true
-			}
-		},
-		{
-			"type": "docker-run",
-			"label": "docker-run: release",
-			"dependsOn": [
-				"docker-build: release"
-			],
-			"dockerRun": {},
-			"netCore": {
-				"appProject": "${workspaceFolder}/src/SpaceBar.PlayerState/SpaceBar.PlayerState.csproj"
-			}
-		}
-	]
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/SpaceBar.WorldEventsEngine/SpaceBar.WorldEventsEngine.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "appId": "worldevents",
+            "appPort": 5000,
+            "httpPort": 3500,
+            "grpcPort": 50001,
+            "label": "dapr-debug",
+            "type": "dapr",
+            "componentsPath": "./src/SpaceBar.WorldEventsEngine/dapr_components",
+            "dependsOn": "build"
+        },
+        {
+            "appId": "worldevents",
+            "label": "daprd-down",
+            "type": "daprd-down"
+        }
+    ]
 }
